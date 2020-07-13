@@ -1,7 +1,25 @@
 <h1>{{ question.question_text }}</h1>
-<ul>
+
+<!-- <ul>
     {% for choice in question.choice_set.all %}
     <li>{{ choice.choice_text}}</li>
     {% endfor %}
-</ul>
-    
+</ul> -->
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<!-- input태그는 사용자가 무언가를 입력할 수 있도록 보여주는 태그 -->
+<!-- 버튼을 눌렀을 때해당 유알엘을 호출하게 되고 해당 유엘알은 뷰의 보트 호출 -->
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    <!-- 사이트가 위조요청을 방지하기 위해 csrf 추가 -->
+    {% csrf_token %}
+
+    {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{{ choice.id}}">
+        <label for="choice{{forloop.counter }}">{{choice.choice_text}}</label><br>
+    {% endfor %}
+<input type="submit" value="Vote">
+</form>
+

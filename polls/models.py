@@ -14,7 +14,8 @@ class Question(models.Model):
 
 #어제의 시간 반환, 어제 이후에 발행이 된 데이터 리턴
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
 
 #Choice모델은 선택지(choice)와 표계산(vote)을 위한 필드를 구성
